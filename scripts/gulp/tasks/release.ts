@@ -10,7 +10,7 @@ task('nightly', (done: Function) => {
 
 task('release.prepareNightly', (done: Function) => {
   const runSequence = require('run-sequence');
-  runSequence(/*'release.pullLatest', 'validate', */'release.copyTools', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
+  runSequence(/*'release.pullLatest', 'validate', */'release.copyTemplates', 'release.copyNpmInfo', 'release.preparePackageJsonTemplate', 'release.nightlyPackageJson', done);
 });
 
 task('release.nightlyPackage', (done: Function) => {
@@ -73,8 +73,8 @@ task('release.prepareRootPackageJson', () => {
   fs.writeFileSync('package.json', JSON.stringify(packageJSON, null, 2));
 });
 
-task('release.copyTools', () => {
-  return src([`${PROJECT_ROOT}/tooling/**/*`]).pipe(dest(`${DIST_BUILD_ROOT}/tooling`));
+task('release.copyTemplates', () => {
+  return src([`${PROJECT_ROOT}/scripts/templates/**/*`]).pipe(dest(`${DIST_BUILD_ROOT}/templates`));
 });
 
 task('release.copyNpmInfo', () => {
